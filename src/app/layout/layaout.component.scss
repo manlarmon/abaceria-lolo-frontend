@@ -1,0 +1,136 @@
+@import '../styles/colors.scss';
+
+.global-container {
+    height: 100%;
+    width: 100%;
+    background: $tertiary;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+    background: #363434;
+    color: $white;
+
+    .menu-btn {
+        width: 10%;
+        height: 100%;
+        padding: 1%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .header-title {
+        width: 90%;
+        padding-right: 10%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        @media (max-width: 600px) {
+            padding-right: 0;
+        }
+
+        .title h2 {
+            font-family: 'Times New Roman', Times, serif !important;
+            color: goldenrod !important;
+            margin: 0 !important;
+        }
+    }
+}
+
+.mat-mdc-raised-button {
+    background-color: $tertiary !important;
+}
+
+.mat-mdc-raised-button>.mat-icon {
+    margin: 0 !important;
+}
+
+.mdc-button {
+    @media (max-width: 600px) {
+        min-width: 48px !important;
+    }
+}
+
+.drawer-container {
+    display: flex;
+    background: transparent;
+    height: 90%;
+    width: 100%;
+}
+
+.mat-drawer {
+    background-color: $secondary !important;
+    border: 0 transparent !important;
+    box-shadow: 10px 0px 20px rgba(0, 0, 0, 0.3);
+
+    .sidenav {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        background: transparent !important;
+        color: $white !important;
+
+    }
+
+}
+
+
+.nav-expansion-panel {
+
+    background: transparent !important;
+    padding: 0 !important;
+
+    .mat-expansion-panel-header {
+        padding: 0px 16px !important;
+        height: 48px !important;
+
+    }
+
+    box-shadow: none !important;
+}
+
+.mat-expansion-panel-content {
+    padding: 0 !important;
+}
+
+@media (hover: none) {
+    .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+        background: none !important;
+    }
+}
+
+.nav-span-accordion {
+    color: $black !important;
+    font-size: 14px !important;
+
+    @media (max-width: 600px) {
+        font-size: 18px !important;
+    }
+
+}
+
+
+
+.nav-span {
+    color: $black !important;
+}
+
+
+.mat-drawer-content {
+    width: 100%;
+}
+
+.divider {
+    margin: 10px 0px !important;
+    color: $black;
+    border: 0;
+    border-top: var(--bs-border-width) solid;
+    opacity: .25;
+}
