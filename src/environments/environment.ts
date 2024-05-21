@@ -1,7 +1,8 @@
 export const environment = {
     production: true,
-    apiUrl: 'http://localhost:5089/',
-  
+    // apiUrl: 'https://abaceria-lolo-backend-c1256133d881.herokuapp.com/',
+    apiUrl: 'https://localhost:7211/',
+
     firebaseConfig: {
       apiKey: "AIzaSyA4s-QiXg2jJxku6umuTD2A_AwNrgIwN94",
       authDomain: "abaceria-lolo.firebaseapp.com",

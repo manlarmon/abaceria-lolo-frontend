@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { AuthService } from '../../core/services/auth-firebase.service';
+
 
 @Component({
   selector: 'login',
@@ -21,18 +22,18 @@ import { MatInputModule } from '@angular/material/input';
 export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
-
-    console.log('LoginComponent initialized AAAAAAAAAAAAAAA ' + environment.apiUrl);
-
   }
-
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
 
+  logIn(email: string, password: string) {
+    this.authService.signInWithEmailAndPassword(email, password);
+  }
+  
 }

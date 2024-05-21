@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/abaceria-lolo-frontend",
+    "public": "dist/abaceria-lolo-frontend/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
