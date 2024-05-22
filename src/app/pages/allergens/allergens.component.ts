@@ -1,9 +1,8 @@
-// allergen-management.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AllergenService } from '../../core/services/allergen.service';
 import { Allergen } from '../../core/models/allergen.model';
-import { SnackBarService } from '../../core/services/snackbar.service';
+import { SnackBarService } from '../../core/services/snack-bar.service';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,10 +13,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'allergens',
+  selector: 'app-allergen-management',
   standalone: true,
-  imports: [
-    MatTableModule,
+  imports: [MatTableModule,
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -42,7 +40,8 @@ export class AllergensComponent implements OnInit {
     private snackBarService: SnackBarService
   ) {
     this.allergenForm = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(50)]]
+      abbreviation: ['', [Validators.required, Validators.maxLength(3)]],
+      allergenName: ['', [Validators.required, Validators.maxLength(10)]]
     });
   }
 
@@ -64,10 +63,10 @@ export class AllergensComponent implements OnInit {
 
   onSubmit(): void {
     if (this.allergenForm.valid) {
-      const allergen: Allergen = { ...this.allergenForm.value };
+      // Se crea un objeto Allergen con los valores del formulario con ...
+      const allergen: Allergen = { ...this.allergenForm.value, allergenId: this.currentAllergenId || 0 };
 
       if (this.editMode && this.currentAllergenId !== null) {
-        allergen.allergenId = this.currentAllergenId;
         this.allergenService.updateAllergen(allergen).subscribe(
           response => {
             this.snackBarService.showSuccess('Alérgeno actualizado con éxito');
@@ -99,7 +98,8 @@ export class AllergensComponent implements OnInit {
     this.editMode = true;
     this.currentAllergenId = allergen.allergenId;
     this.allergenForm.patchValue({
-      name: allergen.name
+      abbreviation: allergen.abbreviation,
+      allergenName: allergen.allergenName
     });
   }
 

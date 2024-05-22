@@ -1,43 +1,10 @@
 <div class="container mt-2">
   <div class="row mb-3">
-    <div class="col-12 text-center">
+    <div class="col-12 text-start">
       <h3>GESTIÓN DE SECCIONES Y PRODUCTOS DE CARTA</h3>
     </div>
   </div>
 
-  <div class="row mb-4 ">
-    <div class="col-12 ">
-      <form [formGroup]="sectionForm" (ngSubmit)="onSubmit()" class="menu-section-form">
-        <h3>- SECCIONES</h3>
-        <mat-form-field appearance="fill" class="me-3 menu-section-create-input">
-          <mat-label>Nombre</mat-label>
-          <input matInput formControlName="menuSectionName" />
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="sectionForm.invalid">
-          <mat-icon>add</mat-icon>
-        </button>
-      </form>
-    </div>
-  </div>
-
-
-  <div class="row" *ngFor="let menuSection of menuSections">
-    <div class="col-12">
-      <div class="card mb-4">
-        <div class="card-header">
-          <h4 class="menu-section">{{ menuSection.menuSectionName }}</h4>
-          <div class="button-container">
-            <button mat-icon-button color="warn">
-              <mat-icon>delete_sweep</mat-icon>
-            </button>
-          </div>
-        </div>
-        <div class="card-body" *ngFor="let menuProduct of menuSection.menuProducts ">
-          <span>{{menuProduct.menuProductName}}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
+<create-section (sectionCreated)="loadMenuSections()"></create-section>
+<sections-and-products-list></sections-and-products-list>
 </div>

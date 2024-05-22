@@ -5,6 +5,7 @@ import { LayoutComponent } from './shared/layout/layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { SectionsAndProductsComponent } from './pages/sections-and-products/sections-and-products.component';
 import { AllergensComponent } from './pages/allergens/allergens.component';
+import { TypeOfServingComponent } from './pages/type-of-serving/type-of-serving.component';
 
 const routes: Routes = [
 
@@ -25,11 +26,15 @@ const routes: Routes = [
     children: [
       {
         path: "sections-and-products",
-        component: SectionsAndProductsComponent, // Usa component en lugar de loadChildren
+        component: SectionsAndProductsComponent, // Usar component en lugar de loadChildren
       },
       {
         path: "allergens",
         component: AllergensComponent,
+      },
+      {
+        path: "type-of-serving",
+        component: TypeOfServingComponent,
       }
     ]
   }

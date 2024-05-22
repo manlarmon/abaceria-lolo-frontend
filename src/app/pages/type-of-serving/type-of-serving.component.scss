@@ -1,0 +1,47 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    &-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      border-radius: 8px 8px 0 0;
+      padding: 10px 15px;
+  
+      h4 {
+        margin: 0;
+        font-size: 1.25rem;
+      }
+    }
+  
+    &-body {
+      padding: 15px;
+    }
+  }
+  
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  table {
+    width: 100%;
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+  }
+  
+  .header-cell {
+    font-weight: bold;
+  }
+  
+  .cell {
+    text-align: center;
+  }
+  

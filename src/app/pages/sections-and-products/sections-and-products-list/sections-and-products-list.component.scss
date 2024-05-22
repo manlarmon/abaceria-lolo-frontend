@@ -1,0 +1,32 @@
+.mat-expansion-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-body {
+    padding: 15px;
+  
+    table {
+      width: 100%;
+  
+      th, td {
+        padding: 10px;
+        text-align: left;
+      }
+  
+      th {
+        font-weight: bold;
+        background-color: #f1f1f1;
+      }
+  
+      td {
+        padding: 8px;
+      }
+    }
+  }
+  
+  button {
+    margin-left: 8px;
+  }
+  

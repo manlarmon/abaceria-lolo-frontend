@@ -1,0 +1,14 @@
+<div class="row mb-4">
+    <div class="col-12">
+        <form [formGroup]="sectionForm" (ngSubmit)="onSubmit()" class="menu-section-form">
+            <h4>- SECCIONES</h4>
+            <mat-form-field appearance="fill" class="me-3 menu-section-create-input">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="menuSectionName" />
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="sectionForm.invalid">
+                <mat-icon>add</mat-icon>
+            </button>
+        </form>
+    </div>
+</div>

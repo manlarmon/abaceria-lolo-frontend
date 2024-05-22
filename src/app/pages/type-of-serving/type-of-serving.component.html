@@ -1,0 +1,58 @@
+<div class="container mt-5">
+    <h3 class="text-center mb-4">Gestión de Tipos de Emplatado</h3>
+  
+    <div class="card mb-4">
+      <div class="card-header">
+        <h4>{{ editMode ? 'Editar Tipo de Emplatado' : 'Crear Tipo de Emplatado' }}</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="typeOfServingForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="fill" class="w-100 mb-3">
+                <mat-label>Nombre del Tipo de Emplatado</mat-label>
+                <input matInput formControlName="typeOfServingName" />
+                <mat-error *ngIf="typeOfServingForm.get('typeOfServingName')?.invalid">Nombre es requerido y debe tener menos de 50 caracteres.</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button mat-raised-button color="primary" type="submit" [disabled]="typeOfServingForm.invalid">
+              {{ editMode ? 'Actualizar' : 'Crear' }}
+            </button>
+            <button mat-button color="warn" type="button" *ngIf="editMode" (click)="resetForm()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <div class="card">
+      <div class="card-header">
+        <h4>Lista de Tipos de Emplatado</h4>
+      </div>
+      <div class="card-body">
+        <table mat-table [dataSource]="typeOfServings" class="w-100 centered-table">
+          <ng-container matColumnDef="typeOfServingName">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> Nombre </th>
+            <td mat-cell *matCellDef="let typeOfServing" class="cell"> {{ typeOfServing.typeOfServingName }} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> Acciones </th>
+            <td mat-cell *matCellDef="let typeOfServing" class="cell">
+              <button mat-icon-button color="primary" (click)="onEdit(typeOfServing)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="onDelete(typeOfServing.typeOfServingId)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="['typeOfServingName', 'actions']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['typeOfServingName', 'actions'];"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  

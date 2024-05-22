@@ -2,7 +2,7 @@ import { Injectable, NgZone } from "@angular/core";
 import { Router } from "@angular/router";
 import { GoogleAuthProvider, user } from "@angular/fire/auth";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { SnackBarService } from "./snackbar.service";
+import { SnackBarService } from "./snack-bar.service";
 
 @Injectable({
   providedIn: 'root'

@@ -24,7 +24,7 @@
     }
 
     .header-title {
-        width: 80%;
+        width: calc(80% - 10px);
         height: 100%;
         display: flex;
         justify-content: center;
@@ -38,6 +38,7 @@
             font-family: 'Times New Roman', Times, serif !important;
             color: goldenrod !important;
             margin: 0 !important;
+            padding-right: 10px;
         }
     }
 
