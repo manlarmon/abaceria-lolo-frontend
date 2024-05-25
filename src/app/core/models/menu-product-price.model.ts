@@ -1,6 +1,10 @@
+import { TypeOfServing } from "./type-of-serving.model";
+
 export interface MenuProductPrice {
     menuProductPriceId: number;
-    price: number;
     menuProductId: number;
     typeOfServingId: number;
-}
+    price: number;
+    typeOfServing: TypeOfServing;
+  }
+  

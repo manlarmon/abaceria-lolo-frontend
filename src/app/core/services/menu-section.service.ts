@@ -12,7 +12,7 @@ export class MenuSectionService {
 
   private apiUrl = `${environment.apiUrl}MenuSection`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllMenuSections(): Observable<MenuSection[]> {
     return this.http.get<MenuSection[]>(this.apiUrl);

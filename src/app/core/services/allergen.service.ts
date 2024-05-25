@@ -11,7 +11,8 @@ import { environment } from '../../../environments/environment';
 export class AllergenService {
     
   private apiUrl = `${environment.apiUrl}Allergen`;
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
 
   getAllAllergens(): Observable<Allergen[]> {
     return this.http.get<Allergen[]>(this.apiUrl);
@@ -26,7 +27,7 @@ export class AllergenService {
   }
 
   updateAllergen(allergen: Allergen): Observable<Allergen> {
-    return this.http.put<Allergen>(this.apiUrl, allergen);
+    return this.http.put<Allergen>(`${this.apiUrl}/${allergen.allergenId}`, allergen);
   }
 
   deleteAllergen(id: number): Observable<void> {

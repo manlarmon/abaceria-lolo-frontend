@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuSectionService } from '../../core/services/menu-section.service';
 import { MenuSection } from '../../core/models/menu-section.model';
+import { MenuProductService } from '../../core/services/menu-product.service';
+import { MenuProduct } from '../../core/models/menu-product.model';
 import { SnackBarService } from '../../core/services/snack-bar.service';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
@@ -12,14 +14,19 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CreateSectionComponent } from './create-section/create-section.component';
+import { MatDrawer } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { SectionsAndProductsListComponent } from './sections-and-products-list/sections-and-products-list.component';
+import { ActivatedRoute } from '@angular/router';
+import { CreateEditProductComponent } from './create-edit-product/create-edit-product.component';
+import { CreateEditSectionComponent } from './create-edit-section/create-edit-section.component';
 
 @Component({
   selector: 'sections-and-products',
   standalone: true,
   imports: [
-    CreateSectionComponent,
+    CreateEditSectionComponent,
     SectionsAndProductsListComponent,
     MatTableModule,
     CommonModule,
@@ -30,22 +37,34 @@ import { SectionsAndProductsListComponent } from './sections-and-products-list/s
     MatCardModule,
     MatFormFieldModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSidenavModule,
+    MatDialogModule,
   ],
   templateUrl: './sections-and-products.component.html',
   styleUrls: ['./sections-and-products.component.scss']
 })
 export class SectionsAndProductsComponent implements OnInit {
   menuSections: MenuSection[] = [];
+  productForm: FormGroup;
 
+  @ViewChild('drawer') drawer: MatDrawer | undefined;
 
   constructor(
+    private route: ActivatedRoute,
     private menuSectionService: MenuSectionService,
-    private snackBarService: SnackBarService
-  ) { }
+    private menuProductService: MenuProductService,
+    private snackBarService: SnackBarService,
+    private fb: FormBuilder,
+    private dialog: MatDialog
+  ) {
+    this.productForm = this.fb.group({
+      menuProductName: ['', [Validators.required, Validators.maxLength(50)]]
+    });
+  }
 
   ngOnInit(): void {
-    this.loadMenuSections();
+    this.menuSections = this.route.snapshot.data['menuSections'] || [];
   }
 
   loadMenuSections(): void {
@@ -56,6 +75,56 @@ export class SectionsAndProductsComponent implements OnInit {
       error => {
         console.error('Error fetching menu sections', error);
         this.snackBarService.showError('Error al cargar las secciones del menú');
+      }
+    );
+  }
+
+  onCreateProduct(sectionId: number): void {
+    const dialogRef = this.dialog.open(CreateEditProductComponent, {
+      width: '600px',
+      data: { product: { menuSectionId: sectionId } }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadMenuSections();
+      }
+    });
+  }
+
+  onEditProduct(product: MenuProduct): void {
+    const dialogRef = this.dialog.open(CreateEditProductComponent, {
+      width: '600px',
+      data: { product }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadMenuSections();
+      }
+    });
+  }
+
+  onDeleteSection(sectionId: number): void {
+    this.menuSectionService.deleteMenuSection(sectionId).subscribe(
+      () => {
+        this.snackBarService.showSuccess('Sección eliminada con éxito');
+        this.loadMenuSections();
+      },
+      error => {
+        this.snackBarService.showError('Error al eliminar la sección');
+      }
+    );
+  }
+
+  onDeleteProduct(productId: number): void {
+    this.menuProductService.deleteMenuProduct(productId).subscribe(
+      () => {
+        this.snackBarService.showSuccess('Producto eliminado con éxito');
+        this.loadMenuSections();
+      },
+      error => {
+        this.snackBarService.showError('Error al eliminar el producto');
       }
     );
   }

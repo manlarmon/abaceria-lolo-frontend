@@ -1,4 +1,3 @@
-// menu-product.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -11,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class MenuProductService {
   private apiUrl = `${environment.apiUrl}MenuProduct`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllMenuProducts(): Observable<MenuProduct[]> {
     return this.http.get<MenuProduct[]>(this.apiUrl);
@@ -26,7 +25,7 @@ export class MenuProductService {
   }
 
   updateMenuProduct(menuProduct: MenuProduct): Observable<MenuProduct> {
-    return this.http.put<MenuProduct>(this.apiUrl, menuProduct);
+    return this.http.put<MenuProduct>(`${this.apiUrl}/${menuProduct.menuProductId}`, menuProduct);
   }
 
   deleteMenuProduct(id: number): Observable<void> {

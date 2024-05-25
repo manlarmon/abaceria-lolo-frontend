@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{ data.product.menuProductId ? 'Editar Producto' : 'Crear Producto' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="productForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre del Producto</mat-label>
+      <input matInput formControlName="menuProductName" />
+      <mat-error *ngIf="productForm.get('menuProductName')?.hasError('required')">
+        El nombre del producto es requerido
+      </mat-error>
+      <mat-error *ngIf="productForm.get('menuProductName')?.hasError('maxlength')">
+        El nombre del producto no puede tener más de 50 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Alérgenos</mat-label>
+      <mat-select formControlName="allergens" multiple>
+        <mat-option *ngFor="let allergen of allergens" [value]="allergen.allergenId">{{ allergen.allergenName }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngFor="let type of typesOfServing">
+      <mat-form-field appearance="fill">
+        <mat-label>Precio para {{ type.typeOfServingName }}</mat-label>
+        <input matInput type="number" [value]="getPriceValue(type.typeOfServingId)" (input)="updatePrice(type.typeOfServingId, $event)" />
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()">Guardar</button>
+</mat-dialog-actions>

@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class TypeOfServingService {
   private apiUrl = `${environment.apiUrl}TypeOfServing`; 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllTypesOfServing(): Observable<TypeOfServing[]> {
     return this.http.get<TypeOfServing[]>(this.apiUrl);

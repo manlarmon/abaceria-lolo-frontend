@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class AllergenMenuProductService {
   private apiUrl = `${environment.apiUrl}AllergenMenuProduct`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllAllergenMenuProducts(): Observable<AllergenMenuProduct[]> {
     return this.http.get<AllergenMenuProduct[]>(this.apiUrl);

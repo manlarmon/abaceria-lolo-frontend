@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>{{ data.section.menuSectionId ? 'Editar Sección' : 'Crear Sección' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="sectionForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre de la Sección</mat-label>
+      <input matInput formControlName="menuSectionName" />
+      <mat-error *ngIf="sectionForm.get('menuSectionName')?.hasError('required')">
+        El nombre de la sección es requerido
+      </mat-error>
+      <mat-error *ngIf="sectionForm.get('menuSectionName')?.hasError('maxlength')">
+        El nombre de la sección no puede tener más de 50 caracteres
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()">Guardar</button>
+</mat-dialog-actions>

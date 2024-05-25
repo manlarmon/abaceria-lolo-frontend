@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class MenuProductPriceService {
   private apiUrl = `${environment.apiUrl}MenuProductPrice`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllMenuProductPrices(): Observable<MenuProductPrice[]> {
     return this.http.get<MenuProductPrice[]>(this.apiUrl);
