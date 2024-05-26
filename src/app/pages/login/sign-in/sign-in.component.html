@@ -1,0 +1,21 @@
+<div class="login-container">
+    <mat-card class="login-card">
+      <mat-card-header>
+        <img src="../../../assets/Images/logodorado.png" alt="logo del caracol del lolo">
+      </mat-card-header>
+      <mat-card-content>
+        <form class="login-form" [formGroup]="signInForm">
+          <mat-form-field>
+            <input #emailInput matInput placeholder="Email" type="email" formControlName="email">
+          </mat-form-field>
+          <mat-form-field>
+            <input #passwordInput matInput placeholder="Contraseña" type="password" formControlName="password">
+          </mat-form-field>
+          <button (click)="logIn(emailInput.value, passwordInput.value)" mat-raised-button color="primary" [disabled]="!signInForm.valid">Iniciar sesión</button>
+        </form>
+        <a (click)="navigateToForgotPassword()">¿Olvidaste tu contraseña?</a> <br>
+        <a (click)="navigateToSignUp()">Activa tu cuenta</a>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

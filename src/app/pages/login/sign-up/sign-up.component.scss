@@ -1,6 +1,6 @@
-@import "../../../styles/colors.scss";
+@import "../../../../styles/colors.scss";
 
-.login-container {
+.sign-up-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,7 +8,7 @@
     background: linear-gradient(170deg, $tertiary, $primary, #ffbb27);
 }
 
-.login-card {
+.sign-up-card {
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -36,7 +36,7 @@
     }
 }
 
-.login-form {
+.sign-up-form {
     display: flex;
     flex-direction: column;
     justify-content: center;

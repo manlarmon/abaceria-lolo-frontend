@@ -1,0 +1,76 @@
+@import "../../../../styles/colors.scss";
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(170deg, $tertiary, $primary, #ffbb27);
+}
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(8, 8, 8, 0.527);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.26);
+  width: 80vw;
+  height: 90vh;
+  align-items: center;
+  justify-content: space-evenly;
+
+  @media (min-width: 600px) {
+    width: 50vw;
+    height: 70vh;
+  }
+
+  @media (min-width: 900px) {
+    width: 25vw;
+    height: 60vh;
+  }
+
+  @media (min-width: 1200px) {
+    width: 20vw;
+    height: 60vh;
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+img {
+  width: 80%;
+  height: auto;
+  margin-bottom: 20px;
+
+  @media (min-width: 600px) {
+    width: 60%;
+  }
+
+  @media (min-width: 900px) {
+    width: 40%;
+  }
+}
+
+.mat-mdc-card-header {
+  display: flex;
+  justify-content: center;
+}
+
+a {
+
+  color: $gold !important;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+
+  &:hover {
+    color: darken($primary, 10%);
+  }
+}

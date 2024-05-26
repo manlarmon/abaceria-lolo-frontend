@@ -27,7 +27,7 @@ export class SnackBarService {
   openSnackBar(message: string, panelClass: string) {
     this.snackBar.open(message, "Cerrar", {
       horizontalPosition: "center",
-      verticalPosition: "top",
+      verticalPosition: "bottom",
       duration: 4000,
       panelClass: `snack-bar-${panelClass}`
     });

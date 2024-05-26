@@ -1,8 +1,7 @@
-// loader.interceptor.ts
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, delay } from 'rxjs/operators';
 import { LoaderService } from '../services/loader.service';
 
 @Injectable()
@@ -16,11 +15,11 @@ export class LoaderInterceptor implements HttpInterceptor {
       tap(
         event => {
           if (event instanceof HttpResponse) {
-            this.loaderService.hide();
+            setTimeout(() => this.loaderService.hide(), 1200);
           }
         },
         error => {
-          this.loaderService.hide();
+          setTimeout(() => this.loaderService.hide());
         }
       )
     );

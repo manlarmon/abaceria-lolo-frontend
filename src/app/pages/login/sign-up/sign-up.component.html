@@ -1,0 +1,24 @@
+<div class="sign-up-container">
+    <mat-card class="sign-up-card">
+      <mat-card-header>
+        <img src="../../../assets/Images/logodorado.png" alt="logo del caracol del lolo">
+      </mat-card-header>
+      <mat-card-content>
+        <form class="sign-up-form" [formGroup]="signUpForm">
+          <mat-form-field>
+            <input #emailInput matInput placeholder="Email" type="email" formControlName="email">
+            <mat-error *ngIf="signUpForm.get('email')?.hasError('required')">El email es requerido</mat-error>
+            <mat-error *ngIf="signUpForm.get('email')?.hasError('email')">Email inválido</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input #passwordInput matInput placeholder="Contraseña" type="password" formControlName="password">
+            <mat-error *ngIf="signUpForm.get('password')?.hasError('required')">La contraseña es requerida</mat-error>
+            <mat-error *ngIf="signUpForm.get('password')?.hasError('minlength')">La contraseña debe tener al menos 6 caracteres</mat-error>
+          </mat-form-field>
+          <button (click)="signUp(emailInput.value, passwordInput.value)" mat-raised-button color="primary" [disabled]="!signUpForm.valid">Registrarse</button>
+        </form>
+        <button mat-button color="accent" (click)="goToLogin()">Volver al Login</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

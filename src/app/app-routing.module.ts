@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { SectionsAndProductsComponent } from './pages/sections-and-products/sections-and-products.component';
 import { AllergensComponent } from './pages/allergens/allergens.component';
 import { TypeOfServingComponent } from './pages/type-of-serving/type-of-serving.component';
-import { MenuSectionsResolver } from './core/resolvers/menu-sections-resolver.service';
-import { AllergensResolver } from './core/resolvers/allergens-resolver.service';
-import { TypeOfServingResolver } from './core/resolvers/type-of-serving-resolver.service';
+import { UsersComponent } from './pages/users/users.component';
+import { UserResolver } from './core/resolvers/user.resolver';
+import { MenuSectionsResolver } from './core/resolvers/menu-sections.resolver';
+import { AllergensResolver } from './core/resolvers/allergens.resolver';
+import { TypeOfServingResolver } from './core/resolvers/type-of-serving.resolver';
+import { AdminGuard } from './core/guards/admin.guard';
 const routes: Routes = [
   {
     path: "",
@@ -16,15 +18,25 @@ const routes: Routes = [
     pathMatch: "full"
   },
   {
-    path: "login",
-    loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
+    path: "sign-in",
+    loadComponent: () => import('./pages/login/sign-in/sign-in.component').then(m => m.SignInComponent)
+  },
+  {
+    path: "sign-up",
+    loadComponent: () => import('./pages/login/sign-up/sign-up.component').then(m => m.SignUpComponent)
+  },
+  {
+    path: "forgotten-password",
+    loadComponent: () => import('./pages/login/forgotten-password/forgotten-password.component').then(m => m.ForgottenPasswordComponent)
   },
   {
     path: "",
+    canActivate: [AuthGuard],
     component: LayoutComponent,
     children: [
       {
         path: "sections-and-products",
+        canActivate: [AuthGuard],
         component: SectionsAndProductsComponent,
         resolve: {
           menuSections: MenuSectionsResolver
@@ -32,6 +44,7 @@ const routes: Routes = [
       },
       {
         path: "allergens",
+        canActivate: [AuthGuard],
         component: AllergensComponent,
         resolve: {
           allergens: AllergensResolver
@@ -39,9 +52,18 @@ const routes: Routes = [
       },
       {
         path: "type-of-serving",
+        canActivate: [AuthGuard],
         component: TypeOfServingComponent,
         resolve: {
           typesOfServing: TypeOfServingResolver
+        }
+      },
+      {
+        path: "user",
+        canActivate: [AuthGuard, AdminGuard],
+        component: UsersComponent,
+        resolve: {
+          users: UserResolver
         }
       }
     ]

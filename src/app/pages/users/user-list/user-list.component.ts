@@ -1,43 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../core/services/user.service';
-import { AuthService } from '../../core/services/auth-firebase.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SnackBarService } from '../../core/services/snack-bar.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { User } from '../../core/models/user.model';
-import { MatDialog } from '@angular/material/dialog';
-import { CreateEditUserComponent } from './create-edit-user/create-edit-user.component';
-import { UserListComponent } from './user-list/user-list.component';
+import { CreateEditUserComponent } from '../create-edit-user/create-edit-user.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { User } from '../../../core/models/user.model';
+import { UserService } from '../../../core/services/user.service';
+import { AuthService } from '../../../core/services/auth-firebase.service';
+import { SnackBarService } from '../../../core/services/snack-bar.service';
 
 @Component({
-  selector: 'users',
+  selector: 'user-list',
   standalone: true,
   imports: [
     CommonModule,
     MatButtonModule,
     MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatIconModule,
     MatSlideToggleModule,
-    ReactiveFormsModule,
-    UserListComponent
+    MatIconModule,
+    MatDialogModule
   ],
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UserListComponent implements OnInit {
   users: User[] = [];
-  displayedColumns: string[] = ['email', 'userName', 'isAdmin', 'enabled', 'actions'];
+  adminUser: User | null = null;
+  displayedColumns: string[] = ['email', 'userName', 'enabled', 'actions'];
+  displayedAdminColumns: string[] = ['email', 'userName'];
 
   constructor(
     private userService: UserService,
@@ -58,7 +51,8 @@ export class UsersComponent implements OnInit {
 
   loadUsers(): void {
     this.userService.getAllUsers().subscribe(users => {
-      this.users = users;
+      this.users = users.filter(user => !user.isAdmin);
+      this.adminUser = users.find(user => user.isAdmin) || null;
     });
   }
 
