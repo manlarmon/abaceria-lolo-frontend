@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ data.product.menuProductId ? 'Editar Producto' : 'Crear Producto' }}</h2>
+<h2 mat-dialog-title>{{ data.product ? 'Editar Producto' : 'Crear Producto' }}</h2>
 <mat-dialog-content>
   <form [formGroup]="productForm">
     <mat-form-field appearance="fill">
@@ -22,7 +22,7 @@
     <div *ngFor="let type of typesOfServing">
       <mat-form-field appearance="fill">
         <mat-label>Precio para {{ type.typeOfServingName }}</mat-label>
-        <input matInput type="number" [value]="getPriceValue(type.typeOfServingId)" (input)="updatePrice(type.typeOfServingId, $event)" />
+        <input matInput type="number" (input)="updatePrice(type.typeOfServingId, $event)" [value]="getPriceValue(type.typeOfServingId)" />
       </mat-form-field>
     </div>
   </form>

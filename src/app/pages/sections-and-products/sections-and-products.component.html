@@ -4,53 +4,5 @@
       <h3>GESTIÓN DE SECCIONES Y PRODUCTOS DE CARTA</h3>
     </div>
   </div>
-
-  <!-- <create-edit-section (sectionCreated)="loadMenuSections()"></create-edit-section> -->
   <sections-and-products-list></sections-and-products-list>
 </div>
-<!-- <mat-accordion>
-  <mat-expansion-panel *ngFor="let menuSection of menuSections">
-    <mat-expansion-panel-header>
-      <mat-panel-title>{{ menuSection.menuSectionName }}</mat-panel-title>
-      <mat-panel-description>
-        <button mat-icon-button color="warn" (click)="onDeleteSection(menuSection.menuSectionId)">
-          <mat-icon>delete_sweep</mat-icon>
-        </button>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-
-    <div class="card-body">
-      <form [formGroup]="productForm" (ngSubmit)="onCreateProduct(menuSection.menuSectionId)">
-        <mat-form-field appearance="fill" class="me-3">
-          <mat-label>Nombre del Producto</mat-label>
-          <input matInput formControlName="menuProductName" />
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="productForm.invalid">
-          <mat-icon>add</mat-icon>
-        </button>
-      </form>
-
-      <table mat-table [dataSource]="menuSection.menuProducts || []" class="w-100">
-        <ng-container matColumnDef="menuProductName">
-          <th mat-header-cell *matHeaderCellDef> Nombre </th>
-          <td mat-cell *matCellDef="let menuProduct"> {{ menuProduct.menuProductName }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Acciones </th>
-          <td mat-cell *matCellDef="let menuProduct">
-            <button mat-icon-button color="primary" (click)="onEditProduct(menuProduct)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="onDeleteProduct(menuProduct.menuProductId)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="['menuProductName', 'actions']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['menuProductName', 'actions'];"></tr>
-      </table>
-    </div>
-  </mat-expansion-panel>
-</mat-accordion> -->

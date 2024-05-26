@@ -40,14 +40,13 @@ export class CreateEditProductComponent implements OnInit {
   productForm: FormGroup;
   allergens: Allergen[] = [];
   typesOfServing: TypeOfServing[] = [];
-  prices: MenuProductPrice[] = [];
+  prices: { typeOfServingId: number; price: number }[] = [];
   selectedAllergens: number[] = [];
 
   constructor(
     private fb: FormBuilder,
     private menuProductService: MenuProductService,
     private allergenService: AllergenService,
-    private menuProductPriceService: MenuProductPriceService,
     private typeOfServingService: TypeOfServingService,
     private snackBarService: SnackBarService,
     public dialogRef: MatDialogRef<CreateEditProductComponent>,
@@ -67,7 +66,11 @@ export class CreateEditProductComponent implements OnInit {
     if (this.data.product) {
       this.productForm.patchValue(this.data.product);
       this.selectedAllergens = this.data.product.allergenMenuProducts?.map(a => a.allergenId) || [];
-      this.prices = this.data.product.menuProductPrices || [];
+      this.prices = this.data.product.menuProductPrices?.map(price => ({
+        typeOfServingId: price.typeOfServingId,
+        price: price.price
+      })) || [];
+      this.productForm.patchValue({ allergens: this.selectedAllergens });
     }
   }
 
@@ -83,9 +86,9 @@ export class CreateEditProductComponent implements OnInit {
     });
   }
 
-  getPriceValue(typeOfServingId: number): number {
+  getPriceValue(typeOfServingId: number): number | null {
     const price = this.prices.find(p => p.typeOfServingId === typeOfServingId);
-    return price ? price.price : 0;
+    return price ? price.price : null;
   }
 
   updatePrice(typeOfServingId: number, event: Event): void {
@@ -99,14 +102,7 @@ export class CreateEditProductComponent implements OnInit {
     if (existingPrice) {
       existingPrice.price = priceValue;
     } else {
-      const typeOfServing = this.typesOfServing.find(type => type.typeOfServingId === typeOfServingId);
-      this.prices.push({ 
-        menuProductPriceId: 0, 
-        menuProductId: this.data.product.menuProductId, 
-        typeOfServingId, 
-        price: priceValue,
-        typeOfServing: typeOfServing! // This assumes typeOfServing is not null or undefined
-      });
+      this.prices.push({ typeOfServingId, price: priceValue });
     }
   }
 
@@ -115,8 +111,14 @@ export class CreateEditProductComponent implements OnInit {
       const productData: MenuProduct = {
         ...this.data.product,
         ...this.productForm.value,
-        menuProductPrices: this.prices,
-        allergenMenuProducts: this.selectedAllergens.map(allergenId => ({ allergenId, menuProductId: this.data.product.menuProductId }))
+        menuProductPrices: this.prices.map(price => ({
+          menuProductPriceId: 0,  // Asigna un valor por defecto si es un nuevo precio
+          menuProductId: this.data.product.menuProductId,
+          typeOfServingId: price.typeOfServingId,
+          price: price.price,
+          typeOfServing: null  // No necesitas asignar esto aquí
+        })),
+        allergenMenuProducts: this.productForm.value.allergens.map((allergenId: number) => ({ allergenId, menuProductId: this.data.product.menuProductId }))
       };
 
       if (productData.menuProductId) {

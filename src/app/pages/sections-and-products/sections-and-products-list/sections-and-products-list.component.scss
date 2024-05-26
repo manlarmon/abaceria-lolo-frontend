@@ -1,32 +1,45 @@
+.mat-expansion-panel{
+  margin-bottom: 10px;
+}
+
 .mat-expansion-panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  table {
+    min-width: 100%;
+    white-space: nowrap;
   }
-  
-  .card-body {
-    padding: 15px;
-  
-    table {
-      width: 100%;
-  
-      th, td {
-        padding: 10px;
-        text-align: left;
-      }
-  
-      th {
-        font-weight: bold;
-        background-color: #f1f1f1;
-      }
-  
-      td {
-        padding: 8px;
-      }
+}
+
+.card-body {
+
+  table {
+    width: 100%;
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      font-weight: bold;
+      background-color: #f1f1f1;
+    }
+
+    td {
+      padding: 8px;
     }
   }
-  
-  button {
-    margin-left: 8px;
-  }
-  
+}
+
+button {
+  margin-left: 8px;
+}
