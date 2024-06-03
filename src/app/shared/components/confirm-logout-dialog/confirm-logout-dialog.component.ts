@@ -5,13 +5,22 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-confirm-logout-dialog',
-  templateUrl: './confirm-logout-dialog.component.html',
   standalone: true,
   imports: [
     CommonModule,
     MatDialogModule,
     MatButtonModule
-  ]
+  ],
+  template: `
+  <h2 mat-dialog-title>Confirmar Eliminación</h2>
+  <mat-dialog-content>
+    <p>¿Estás seguro de que deseas eliminar esta sección?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button color="warn" (click)="onConfirm()">Eliminar</button>
+  </mat-dialog-actions>
+`,
 })
 export class ConfirmLogoutDialogComponent {
 

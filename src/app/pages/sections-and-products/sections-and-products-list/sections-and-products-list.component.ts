@@ -15,8 +15,10 @@ import { MenuProductPrice } from '../../../core/models/menu-product-price.model'
 import { CreateEditProductComponent } from '../create-edit-product/create-edit-product.component';
 import { CreateEditSectionComponent } from '../create-edit-section/create-edit-section.component';
 import { AdjustPricesDialogComponent } from '../adjust-prices-dialog/adjust-prices-dialog.component';
+import { DeleteSectionDialogComponent } from '../delete-section-dialog/delete-section-dialog.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DeleteProductDialogComponent } from '../delete-product-dialog/delete-product-dialog.component';
 
 @Component({
   selector: 'sections-and-products-list',
@@ -31,7 +33,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     CreateEditProductComponent,
     CreateEditSectionComponent,
     MatSlideToggleModule,
-    AdjustPricesDialogComponent
+    AdjustPricesDialogComponent,
+    DeleteSectionDialogComponent,
+    DeleteProductDialogComponent
   ],
   templateUrl: './sections-and-products-list.component.html',
   styleUrls: ['./sections-and-products-list.component.scss']
@@ -149,29 +153,45 @@ export class SectionsAndProductsListComponent implements OnInit {
   }
 
   onDeleteSection(sectionId: number): void {
-    this.menuSectionService.deleteMenuSection(sectionId).subscribe(
-      response => {
-        this.snackBarService.showSuccess('Sección eliminada con éxito');
-        this.loadMenuSections();
-      },
-      error => {
-        console.error('Error deleting section', error);
-        this.snackBarService.showError('Error al eliminar la sección');
+    const dialogRef = this.dialog.open(DeleteSectionDialogComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.menuSectionService.deleteMenuSection(sectionId).subscribe(
+          response => {
+            this.snackBarService.showSuccess('Sección eliminada con éxito');
+            this.loadMenuSections();
+          },
+          error => {
+            console.error('Error deleting section', error);
+            this.snackBarService.showError('Error al eliminar la sección');
+          }
+        );
       }
-    );
+    });
   }
 
   onDeleteProduct(productId: number): void {
-    this.menuProductService.deleteMenuProduct(productId).subscribe(
-      response => {
-        this.snackBarService.showSuccess('Producto eliminado con éxito');
-        this.loadMenuSections();
-      },
-      error => {
-        console.error('Error deleting product', error);
-        this.snackBarService.showError('Error al eliminar el producto');
+    const dialogRef = this.dialog.open(DeleteProductDialogComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.menuProductService.deleteMenuProduct(productId).subscribe(
+          response => {
+            this.snackBarService.showSuccess('Producto eliminado con éxito');
+            this.loadMenuSections();
+          },
+          error => {
+            console.error('Error deleting product', error);
+            this.snackBarService.showError('Error al eliminar el producto');
+          }
+        );
       }
-    );
+    });
   }
 
   getPrice(prices: MenuProductPrice[] | null, typeOfServingId: number): number {
@@ -248,13 +268,13 @@ export class SectionsAndProductsListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        console.log('Adjusting prices with value:', result); // Log the adjustment value
         this.menuSectionService.adjustPricesForSection(menuSection.menuSectionId, result).subscribe(
           () => {
             this.snackBarService.showSuccess('Precios ajustados con éxito');
             this.loadMenuSections();
           },
           error => {
+            console.log(menuSection.menuSectionId, result);
             this.snackBarService.showError('Error al ajustar los precios');
             console.error('Error adjusting prices', error);
           }

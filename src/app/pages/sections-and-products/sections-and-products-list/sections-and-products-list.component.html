@@ -12,12 +12,7 @@
       <mat-expansion-panel-header>
         <mat-panel-title>{{ menuSection?.menuSectionName }}</mat-panel-title>
         <mat-panel-description>
-          <button mat-icon-button color="primary" (click)="onEditSection(menuSection)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="onDeleteSection(menuSection.menuSectionId)">
-            <mat-icon>delete_sweep</mat-icon>
-          </button>
+
         </mat-panel-description>
       </mat-expansion-panel-header>
 
@@ -26,7 +21,14 @@
           <label>Orden:</label>
           <input type="number" [value]="menuSection?.order" (change)="updateSectionOrder(menuSection, $event)" />
           <label>Visibilidad:</label>
-          <mat-slide-toggle [checked]="menuSection?.isVisible" (change)="toggleSectionVisibility(menuSection)"></mat-slide-toggle>
+          <mat-slide-toggle [checked]="menuSection?.isVisible"
+            (change)="toggleSectionVisibility(menuSection)"></mat-slide-toggle>
+          <button mat-icon-button color="primary" (click)="onEditSection(menuSection)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDeleteSection(menuSection.menuSectionId)">
+            <mat-icon>delete_sweep</mat-icon>
+          </button>
         </div>
         <div class="table-container">
           <table mat-table [dataSource]="menuSection?.menuProducts || []" class="w-100">
@@ -45,7 +47,8 @@
             <ng-container matColumnDef="visibility">
               <th mat-header-cell *matHeaderCellDef> Visibilidad </th>
               <td mat-cell *matCellDef="let menuProduct">
-                <mat-slide-toggle [checked]="menuProduct?.isVisible" (change)="toggleVisibility(menuProduct)"></mat-slide-toggle>
+                <mat-slide-toggle [checked]="menuProduct?.isVisible"
+                  (change)="toggleVisibility(menuProduct)"></mat-slide-toggle>
               </td>
             </ng-container>
 
@@ -76,7 +79,7 @@
           <button mat-raised-button color="primary" (click)="onCreateProduct(menuSection.menuSectionId)">
             <mat-icon>add</mat-icon>
             <span>Agregar Producto</span>
-          </button>
+          </button> 
           <button mat-raised-button color="accent" (click)="openAdjustPricesDialog(menuSection)">
             <mat-icon>euro</mat-icon>
             <span>Ajustar Precios</span>
