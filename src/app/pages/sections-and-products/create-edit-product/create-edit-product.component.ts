@@ -3,13 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MenuProductService } from '../../../core/services/menu-product.service';
 import { AllergenService } from '../../../core/services/allergen.service';
-import { MenuProductPriceService } from '../../../core/services/menu-product-price.service';
 import { TypeOfServingService } from '../../../core/services/type-of-serving.service';
 import { SnackBarService } from '../../../core/services/snack-bar.service';
 import { MenuProduct } from '../../../core/models/menu-product.model';
 import { Allergen } from '../../../core/models/allergen.model';
 import { TypeOfServing } from '../../../core/models/type-of-serving.model';
-import { MenuProductPrice } from '../../../core/models/menu-product-price.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -55,7 +53,8 @@ export class CreateEditProductComponent implements OnInit {
     this.productForm = this.fb.group({
       menuProductName: ['', [Validators.required, Validators.maxLength(50)]],
       allergens: [[]],
-      prices: [[]]
+      prices: [[]],
+      isVisible: [data.product.isVisible ?? true]  // Asegura que el nuevo producto sea visible por defecto
     });
   }
 
@@ -116,11 +115,11 @@ export class CreateEditProductComponent implements OnInit {
           menuProductId: this.data.product.menuProductId,
           typeOfServingId: price.typeOfServingId,
           price: price.price,
-          typeOfServing: null  // No necesitas asignar esto aquí
+          typeOfServing: null
         })),
         allergenMenuProducts: this.productForm.value.allergens.map((allergenId: number) => ({ allergenId, menuProductId: this.data.product.menuProductId }))
       };
-
+  
       if (productData.menuProductId) {
         this.menuProductService.updateMenuProduct(productData).subscribe(
           () => {
@@ -144,6 +143,7 @@ export class CreateEditProductComponent implements OnInit {
       }
     }
   }
+  
 
   onCancel(): void {
     this.dialogRef.close();

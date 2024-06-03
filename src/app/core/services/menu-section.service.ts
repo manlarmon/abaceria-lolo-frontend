@@ -1,4 +1,3 @@
-// menu-section.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -32,5 +31,10 @@ export class MenuSectionService {
 
   deleteMenuSection(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  // Nuevo método para ajustar los precios de una sección
+  adjustPricesForSection(sectionId: number, adjustment: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${sectionId}/adjust-prices`,  adjustment );
   }
 }

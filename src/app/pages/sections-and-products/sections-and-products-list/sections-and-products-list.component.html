@@ -1,4 +1,4 @@
-<div class="container mt-2">
+<div class="container mt-2 p-0">
   <div class="row mb-3">
     <div class="col-12 text-start">
       <button mat-raised-button color="primary" (click)="onCreateSection()">
@@ -10,7 +10,7 @@
   <mat-accordion>
     <mat-expansion-panel *ngFor="let menuSection of menuSections">
       <mat-expansion-panel-header>
-        <mat-panel-title>{{ menuSection.menuSectionName }}</mat-panel-title>
+        <mat-panel-title>{{ menuSection?.menuSectionName }}</mat-panel-title>
         <mat-panel-description>
           <button mat-icon-button color="primary" (click)="onEditSection(menuSection)">
             <mat-icon>edit</mat-icon>
@@ -22,17 +22,37 @@
       </mat-expansion-panel-header>
 
       <div class="card-body">
+        <div class="section-controls mb-2">
+          <label>Orden:</label>
+          <input type="number" [value]="menuSection?.order" (change)="updateSectionOrder(menuSection, $event)" />
+          <label>Visibilidad:</label>
+          <mat-slide-toggle [checked]="menuSection?.isVisible" (change)="toggleSectionVisibility(menuSection)"></mat-slide-toggle>
+        </div>
         <div class="table-container">
-          <table mat-table [dataSource]="menuSection.menuProducts || []" class="w-100">
+          <table mat-table [dataSource]="menuSection?.menuProducts || []" class="w-100">
             <ng-container matColumnDef="menuProductName">
               <th mat-header-cell *matHeaderCellDef> Nombre </th>
-              <td mat-cell *matCellDef="let menuProduct"> {{ menuProduct.menuProductName }} </td>
+              <td mat-cell *matCellDef="let menuProduct"> {{ menuProduct?.menuProductName }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="order">
+              <th mat-header-cell *matHeaderCellDef> Orden </th>
+              <td mat-cell *matCellDef="let menuProduct">
+                <input type="number" [value]="menuProduct?.order" (change)="updateProductOrder(menuProduct, $event)" />
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="visibility">
+              <th mat-header-cell *matHeaderCellDef> Visibilidad </th>
+              <td mat-cell *matCellDef="let menuProduct">
+                <mat-slide-toggle [checked]="menuProduct?.isVisible" (change)="toggleVisibility(menuProduct)"></mat-slide-toggle>
+              </td>
             </ng-container>
 
             <ng-container *ngFor="let type of typesOfServing" [matColumnDef]="type.typeOfServingName">
               <th mat-header-cell *matHeaderCellDef> {{ type.typeOfServingName }} </th>
               <td mat-cell *matCellDef="let menuProduct">
-                {{ getPrice(menuProduct.menuProductPrices, type.typeOfServingId) }} €
+                {{ getPrice(menuProduct?.menuProductPrices, type.typeOfServingId) }} €
               </td>
             </ng-container>
 
@@ -42,7 +62,7 @@
                 <button mat-icon-button color="primary" (click)="onEditProduct(menuProduct)">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="warn" (click)="onDeleteProduct(menuProduct.menuProductId)">
+                <button mat-icon-button color="warn" (click)="onDeleteProduct(menuProduct?.menuProductId)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </td>
@@ -52,10 +72,16 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>
-        <button mat-raised-button color="primary" (click)="onCreateProduct(menuSection.menuSectionId)">
-          <mat-icon>add</mat-icon>
-          <span>Agregar Producto</span>
-        </button>
+        <div class="actions-container">
+          <button mat-raised-button color="primary" (click)="onCreateProduct(menuSection.menuSectionId)">
+            <mat-icon>add</mat-icon>
+            <span>Agregar Producto</span>
+          </button>
+          <button mat-raised-button color="accent" (click)="openAdjustPricesDialog(menuSection)">
+            <mat-icon>euro</mat-icon>
+            <span>Ajustar Precios</span>
+          </button>
+        </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

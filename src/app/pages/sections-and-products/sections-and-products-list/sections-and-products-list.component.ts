@@ -14,7 +14,9 @@ import { TypeOfServing } from '../../../core/models/type-of-serving.model';
 import { MenuProductPrice } from '../../../core/models/menu-product-price.model';
 import { CreateEditProductComponent } from '../create-edit-product/create-edit-product.component';
 import { CreateEditSectionComponent } from '../create-edit-section/create-edit-section.component';
+import { AdjustPricesDialogComponent } from '../adjust-prices-dialog/adjust-prices-dialog.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'sections-and-products-list',
@@ -28,6 +30,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDialogModule,
     CreateEditProductComponent,
     CreateEditSectionComponent,
+    MatSlideToggleModule,
+    AdjustPricesDialogComponent
   ],
   templateUrl: './sections-and-products-list.component.html',
   styleUrls: ['./sections-and-products-list.component.scss']
@@ -43,7 +47,7 @@ export class SectionsAndProductsListComponent implements OnInit {
     private typeOfServingService: TypeOfServingService,
     private snackBarService: SnackBarService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadMenuSections();
@@ -80,13 +84,23 @@ export class SectionsAndProductsListComponent implements OnInit {
   }
 
   updateDisplayedColumns(): void {
-    this.displayedColumns = ['menuProductName', ...this.typesOfServing.map(type => type.typeOfServingName), 'actions'];
+    this.displayedColumns = ['menuProductName', 'order', 'visibility', ...this.typesOfServing.map(type => type.typeOfServingName), 'actions'];
   }
 
   onCreateProduct(sectionId: number): void {
+    const newProduct: MenuProduct = {
+      menuProductId: 0,
+      menuSectionId: sectionId,
+      menuProductName: '',
+      isVisible: true,
+      order: 0,
+      menuProductPrices: [],
+      allergenMenuProducts: []
+    };
+
     const dialogRef = this.dialog.open(CreateEditProductComponent, {
       width: '500px',
-      data: { product: { menuSectionId: sectionId } }
+      data: { product: newProduct }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -160,8 +174,92 @@ export class SectionsAndProductsListComponent implements OnInit {
     );
   }
 
-  getPrice(prices: MenuProductPrice[], typeOfServingId: number): number {
+  getPrice(prices: MenuProductPrice[] | null, typeOfServingId: number): number {
+    if (!prices) return 0;
     const priceObj = prices.find(price => price.typeOfServingId === typeOfServingId);
     return priceObj ? priceObj.price : 0;
+  }
+
+  updateProductOrder(product: MenuProduct | null, event: Event): void {
+    if (!product) return;
+    const inputElement = event.target as HTMLInputElement;
+    const order = parseInt(inputElement.value, 10);
+    product.order = order;
+    this.menuProductService.updateMenuProduct(product).subscribe(
+      () => {
+        this.snackBarService.showSuccess('Orden actualizado con éxito');
+      },
+      error => {
+        this.snackBarService.showError('Error al actualizar el orden');
+        console.error('Error updating order', error);
+      }
+    );
+  }
+
+  toggleVisibility(product: MenuProduct | null): void {
+    if (!product) return;
+    product.isVisible = !product.isVisible;
+    this.menuProductService.updateMenuProduct(product).subscribe(
+      () => {
+        this.snackBarService.showSuccess('Visibilidad actualizada con éxito');
+      },
+      error => {
+        this.snackBarService.showError('Error al actualizar la visibilidad');
+        console.error('Error updating visibility', error);
+      }
+    );
+  }
+
+  updateSectionOrder(section: MenuSection | null, event: Event): void {
+    if (!section) return;
+    const inputElement = event.target as HTMLInputElement;
+    const order = parseInt(inputElement.value, 10);
+    section.order = order;
+    this.menuSectionService.updateMenuSection(section).subscribe(
+      () => {
+        this.snackBarService.showSuccess('Orden de sección actualizado con éxito');
+      },
+      error => {
+        this.snackBarService.showError('Error al actualizar el orden de la sección');
+        console.error('Error updating section order', error);
+      }
+    );
+  }
+
+  toggleSectionVisibility(section: MenuSection | null): void {
+    if (!section) return;
+    section.isVisible = !section.isVisible;
+    this.menuSectionService.updateMenuSection(section).subscribe(
+      () => {
+        this.snackBarService.showSuccess('Visibilidad de la sección actualizada con éxito');
+      },
+      error => {
+        this.snackBarService.showError('Error al actualizar la visibilidad de la sección');
+        console.error('Error updating section visibility', error);
+      }
+    );
+  }
+
+  openAdjustPricesDialog(menuSection: MenuSection): void {
+    const dialogRef = this.dialog.open(AdjustPricesDialogComponent, {
+      width: '400px',
+      data: { sectionId: menuSection.menuSectionId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        console.log('Adjusting prices with value:', result); // Log the adjustment value
+        this.menuSectionService.adjustPricesForSection(menuSection.menuSectionId, result).subscribe(
+          () => {
+            this.snackBarService.showSuccess('Precios ajustados con éxito');
+            this.loadMenuSections();
+          },
+          error => {
+            this.snackBarService.showError('Error al ajustar los precios');
+            console.error('Error adjusting prices', error);
+          }
+        );
+      }
+    });
   }
 }

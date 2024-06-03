@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://abaceria-lolo-backend-c1256133d881.herokuapp.com/',
-    // apiUrl: 'https://localhost:7211/',
+    // apiUrl: 'https://abaceria-lolo-backend-c1256133d881.herokuapp.com/',
+    apiUrl: 'https://localhost:7211/',
   
     firebaseConfig: {
       apiKey: "AIzaSyA4s-QiXg2jJxku6umuTD2A_AwNrgIwN94",

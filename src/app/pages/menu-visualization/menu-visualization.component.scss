@@ -1,0 +1,73 @@
+@import '../../../styles/colors.scss';
+
+.container {
+    margin-top: 20px;
+    padding: 0;
+    border: 1px solid $dark;
+    border-radius: 5px;
+
+    .menu-header {
+        padding: 0px;
+
+        h3 {
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+        }
+    }
+}
+
+.menu-header {
+    background-color: $dark;
+    color: $gold;
+    border-radius: 5px 5px 0 0;
+}
+
+.menu-section {
+    margin-bottom: 20px;
+
+    h4 {
+        background-color: $dark;
+        margin: 0;
+        margin-bottom: 5px;
+        color: $gold;
+        padding: 10px;
+    }
+}
+
+.menu-products {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu-product {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    .menu-product-name {
+        flex: 1;
+        font-weight: bold;
+    }
+
+    .menu-product-services {
+        flex: 1;
+        font-style: italic;
+        color: gray;
+        text-align: center;
+
+        ul {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+    }
+
+    .menu-product-allergens {
+        flex: 1;
+        text-align: right;
+    }
+}

@@ -7,6 +7,9 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AuthService } from '../../core/services/auth-firebase.service';
 import { filter } from 'rxjs/operators';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmLogoutDialogComponent } from '../components/confirm-logout-dialog/confirm-logout-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -20,7 +23,8 @@ export class LayoutComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private dialog: MatDialog
   ) {}
 
   @ViewChild('matDrawer', { static: true })
@@ -49,7 +53,14 @@ export class LayoutComponent {
   }
   panelOpenState = false;
 
-  logout() {
-    this.authService.logOut();
+  logout(): void {
+    const dialogRef = this.dialog.open(ConfirmLogoutDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.authService.logOut();
+        console.log('Sesión cerrada');
+      }
+    });
   }
 }

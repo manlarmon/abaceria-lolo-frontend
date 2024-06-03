@@ -15,6 +15,7 @@ import { LoaderInterceptor } from './core/interceptor/loader.interceptor';
 import { LoaderService } from './core/services/loader.service';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { DrawerModeDirective } from './core/directives/drawer-mode.directive';
+import { MenuVisualizationComponent } from './pages/menu-visualization/menu-visualization.component';
 
 
 
@@ -34,6 +35,7 @@ import { DrawerModeDirective } from './core/directives/drawer-mode.directive';
         LayoutComponent,
         LoaderComponent,
         AllergensComponent,
+        MenuVisualizationComponent,
         SectionsAndProductsComponent,
         BrowserAnimationsModule,
         AppRoutingModule,

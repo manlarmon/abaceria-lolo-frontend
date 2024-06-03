@@ -1,0 +1,21 @@
+<h2 mat-dialog-title class="text-center font-weight-bold">Ajustar Precios</h2>
+<mat-dialog-content class="d-flex flex-column align-items-center">
+    <form [formGroup]="adjustPricesForm" class="w-100">
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Cantidad de ajuste</mat-label>
+            <input matInput formControlName="adjustment" type="number" />
+            <mat-error *ngIf="adjustPricesForm.get('adjustment')?.hasError('required')">
+                La cantidad de ajuste es requerida.
+            </mat-error>
+            <mat-error *ngIf="adjustPricesForm.get('adjustment')?.hasError('min')">
+                La cantidad de ajuste debe ser mayor a 0.
+            </mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex align-content-center flex-column justify-content-center p-3 ">
+    <button mat-raised-button color="primary" class="mx-1 mb-1" (click)="onAdjustPrices(true)">Incrementar</button>
+    <button mat-raised-button color="warn" class="mx-1 mb-1" (click)="onAdjustPrices(false)">Decrementar</button>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+
+</mat-dialog-actions>

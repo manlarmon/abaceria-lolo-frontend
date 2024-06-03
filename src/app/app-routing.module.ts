@@ -11,6 +11,7 @@ import { MenuSectionsResolver } from './core/resolvers/menu-sections.resolver';
 import { AllergensResolver } from './core/resolvers/allergens.resolver';
 import { TypeOfServingResolver } from './core/resolvers/type-of-serving.resolver';
 import { AdminGuard } from './core/guards/admin.guard';
+import { MenuVisualizationComponent } from './pages/menu-visualization/menu-visualization.component';
 const routes: Routes = [
   {
     path: "",
@@ -64,6 +65,13 @@ const routes: Routes = [
         component: UsersComponent,
         resolve: {
           users: UserResolver
+        }
+      },
+      {
+        path: "menu-visualization",
+        canActivate: [AuthGuard],
+        component: MenuVisualizationComponent,
+        resolve: {
         }
       }
     ]
