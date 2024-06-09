@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { ConfirmLogoutDialogComponent } from '../../../shared/components/confirm-logout-dialog/confirm-logout-dialog.component';
+import { ConfirmLogoutDialogComponent } from '../confirm-logout-dialog/confirm-logout-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-delete-section-dialog',
@@ -16,7 +15,7 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
 })
 export class DeleteSectionDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
+    public dialogRef: MatDialogRef<DeleteSectionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 

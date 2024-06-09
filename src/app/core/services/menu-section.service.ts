@@ -32,8 +32,6 @@ export class MenuSectionService {
   deleteMenuSection(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-
-  // Nuevo método para ajustar los precios de una sección
   adjustPricesForSection(sectionId: number, adjustment: number): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${sectionId}/adjust-prices`,  adjustment );
   }

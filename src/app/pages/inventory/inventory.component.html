@@ -1,1 +1,71 @@
-<p>inventory works!</p>
+<!-- inventory.component.html -->
+<div class="container mt-2">
+  <div class="row mb-3">
+    <div class="col-12 text-start">
+      <h3>GESTIÓN DE INVENTARIO</h3>
+      <button mat-raised-button color="primary" (click)="onCreateSection()">
+        <mat-icon>add</mat-icon> Crear Sección
+      </button>
+      <button mat-raised-button color="accent" (click)="downloadPdf()">
+        <mat-icon>picture_as_pdf</mat-icon> Descargar PDF
+      </button>
+    </div>
+  </div>
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let section of inventorySections">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ section.sectionName }}</mat-panel-title>
+        <mat-panel-description>
+          <button mat-icon-button color="primary" (click)="onEditSection(section)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDeleteSection(section.inventorySectionId)">
+            <mat-icon>delete_sweep</mat-icon>
+          </button>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="card-body">
+        <div class="section-controls mb-2">
+          <label>Visibilidad:</label>
+          <mat-slide-toggle [checked]="section.isActive" (change)="toggleSectionVisibility(section)"></mat-slide-toggle>
+        </div>
+        <div class="table-container">
+          <table mat-table [dataSource]="section.inventoryProducts || []" class="w-100">
+            <ng-container matColumnDef="productName">
+              <th mat-header-cell *matHeaderCellDef> Nombre </th>
+              <td mat-cell *matCellDef="let product"> {{ product.productName }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+              <td mat-cell *matCellDef="let product">
+                <input type="number" [value]="product.quantity" (change)="updateProductQuantity(product, $event)" />
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Acciones </th>
+              <td mat-cell *matCellDef="let product">
+                <button mat-icon-button color="primary" (click)="onEditProduct(product)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="onDeleteProduct(product.inventoryProductId)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+        <button mat-raised-button color="primary" (click)="onCreateProduct(section.inventorySectionId)">
+          <mat-icon>add</mat-icon>
+          <span>Agregar Producto</span>
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

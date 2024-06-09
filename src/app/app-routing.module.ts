@@ -12,6 +12,8 @@ import { AllergensResolver } from './core/resolvers/allergens.resolver';
 import { TypeOfServingResolver } from './core/resolvers/type-of-serving.resolver';
 import { AdminGuard } from './core/guards/admin.guard';
 import { MenuVisualizationComponent } from './pages/menu-visualization/menu-visualization.component';
+import { InventoryComponent } from './pages/inventory/inventory.component';
+import { UserGuideComponent } from './pages/user-guide/user-guide.component';
 const routes: Routes = [
   {
     path: "",
@@ -29,6 +31,15 @@ const routes: Routes = [
   {
     path: "forgotten-password",
     loadComponent: () => import('./pages/login/forgotten-password/forgotten-password.component').then(m => m.ForgottenPasswordComponent)
+  },
+  {
+    path: "menu-visualization",
+    loadComponent: () => import('./pages/menu-visualization/menu-visualization.component').then(m => m.MenuVisualizationComponent),
+    resolve: {
+      menuSections: MenuSectionsResolver,
+      allergens: AllergensResolver,
+      TypeOfServingResolver: TypeOfServingResolver
+    }
   },
   {
     path: "",
@@ -68,12 +79,18 @@ const routes: Routes = [
         }
       },
       {
-        path: "menu-visualization",
+        path: "inventory",
         canActivate: [AuthGuard],
-        component: MenuVisualizationComponent,
+        component: InventoryComponent,
         resolve: {
         }
+      },
+      {
+        path: "user-guide",
+        canActivate: [AuthGuard],
+        component: UserGuideComponent,
       }
+
     ]
   }
 ];

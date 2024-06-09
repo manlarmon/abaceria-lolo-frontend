@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { SnackBarService } from "./snack-bar.service";
 import { UserService } from './user.service';
-import { Observable, catchError, map, of } from "rxjs";
+import { Observable, catchError, from, map, of } from "rxjs";
 import { User } from "../models/user.model";
 
 @Injectable({
@@ -138,6 +138,9 @@ export class AuthService {
     );
   }
 
+  getToken() {
+    return from(this.firebaseAuthenticationService.currentUser.then(user => user?.getIdToken()));
+  }
   
 
 }

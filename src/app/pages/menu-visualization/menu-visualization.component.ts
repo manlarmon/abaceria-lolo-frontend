@@ -3,7 +3,6 @@ import { MenuSectionService } from '../../core/services/menu-section.service';
 import { TypeOfServingService } from '../../core/services/type-of-serving.service';
 import { MenuSection } from '../../core/models/menu-section.model';
 import { TypeOfServing } from '../../core/models/type-of-serving.model';
-import { MenuProduct } from '../../core/models/menu-product.model';
 import { AllergenService } from '../../core/services/allergen.service';
 import { Allergen } from '../../core/models/allergen.model';
 import { CommonModule } from '@angular/common';
@@ -13,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'menu-visualization',
@@ -24,7 +24,8 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     MatTableModule,
     MatExpansionModule,
-    MatCardModule
+    MatCardModule,
+    MatMenuModule
   ],
   templateUrl: './menu-visualization.component.html',
   styleUrls: ['./menu-visualization.component.scss']

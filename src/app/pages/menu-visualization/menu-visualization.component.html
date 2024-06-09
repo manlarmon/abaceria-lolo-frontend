@@ -1,37 +1,47 @@
 <div class="container mt-2">
-    <div>
-        <div class="menu-header">
-            <h3>Carta</h3>
+    <div class="menu-header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center ms-3">
+            <img src="../../../assets/Images/logodorado.png" alt="Logo" class="menu-logo">
+            <h3 class="mb-0 ms-3">Carta</h3>
         </div>
+        <button mat-icon-button [matMenuTriggerFor]="allergensMenu" class="ms-auto">
+            <mat-icon>info</mat-icon>
+        </button>
+        <mat-menu #allergensMenu="matMenu">
+            <ng-container *ngFor="let allergen of allergens">
+                <button mat-menu-item>{{ allergen.allergenName }} ({{ allergen.abbreviation }})</button>
+            </ng-container>
+        </mat-menu>
     </div>
 
-    <div *ngFor="let menuSection of menuSections">
-
-        <ng-container *ngIf="menuSection.isVisible">
-            <div class="menu-section">
-                <h4>{{ menuSection.menuSectionName }}</h4>
-                <ul class="menu-products">
-                    <li *ngFor="let menuProduct of menuSection.menuProducts">
-                        <ng-container *ngIf="menuProduct.isVisible">
-                            <div class="menu-product">
-                                <span class="menu-product-name">{{ menuProduct.menuProductName }}</span>
-                                <span class="menu-product-services">
-                                    <ul>
-                                        <li
-                                            *ngFor="let service of getProductTypesOfServing(menuProduct.menuProductPrices ?? [])">
-                                            {{ service }}
-                                        </li>
-                                    </ul>
-                                </span>
-                                <span class="menu-product-allergens">
-                                    ({{ getProductAllergens(menuProduct.allergenMenuProducts ?? []) }})
-                                </span>
-                            </div>
-                        </ng-container>
-                    </li>
-                </ul>
-            </div>
-
-        </ng-container>
+    <div class="menu-content">
+        <div *ngFor="let menuSection of menuSections">
+            <ng-container *ngIf="menuSection.isVisible">
+                <div class="menu-section">
+                    <h4>{{ menuSection.menuSectionName }}</h4>
+                    <ul class="menu-products">
+                        <li *ngFor="let menuProduct of menuSection.menuProducts">
+                            <ng-container *ngIf="menuProduct.isVisible">
+                                <div class="menu-product">
+                                    <div class="product-info ms-3">
+                                        <span class="menu-product-name">{{ menuProduct.menuProductName }}</span>
+                                        <span class="menu-product-allergens" *ngIf="menuProduct.allergenMenuProducts && menuProduct.allergenMenuProducts.length > 0">
+                                            ({{ getProductAllergens(menuProduct.allergenMenuProducts) }})
+                                        </span>
+                                    </div>
+                                    <div class="menu-product-services">
+                                        <ul>
+                                            <li *ngFor="let service of getProductTypesOfServing(menuProduct.menuProductPrices ?? [])">
+                                                {{ service }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </li>
+                    </ul>
+                </div>
+            </ng-container>
+        </div>
     </div>
 </div>

@@ -20,6 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent {
+http: any;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -62,5 +63,10 @@ export class LayoutComponent {
         console.log('Sesión cerrada');
       }
     });
+  }
+
+  openMenuVisualization(): void {
+    const url = this.router.serializeUrl(this.router.createUrlTree(['/menu-visualization']));
+    window.open(url, '_blank');
   }
 }

@@ -16,6 +16,9 @@ import { LoaderService } from './core/services/loader.service';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { DrawerModeDirective } from './core/directives/drawer-mode.directive';
 import { MenuVisualizationComponent } from './pages/menu-visualization/menu-visualization.component';
+import { AuthInterceptor } from './core/interceptor/auth.interceptor';
+import { AuthService } from './core/services/auth-firebase.service';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 
@@ -28,6 +31,8 @@ import { MenuVisualizationComponent } from './pages/menu-visualization/menu-visu
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
         provideAuth(() => getAuth()),
         { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        AuthService,
         LoaderService 
     ],
     bootstrap: [AppComponent],
@@ -41,6 +46,7 @@ import { MenuVisualizationComponent } from './pages/menu-visualization/menu-visu
         AppRoutingModule,
         MatButtonModule,
         HttpClientModule,
+        PdfViewerModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
     ]
 })

@@ -15,7 +15,7 @@ import { MenuProductPrice } from '../../../core/models/menu-product-price.model'
 import { CreateEditProductComponent } from '../create-edit-product/create-edit-product.component';
 import { CreateEditSectionComponent } from '../create-edit-section/create-edit-section.component';
 import { AdjustPricesDialogComponent } from '../adjust-prices-dialog/adjust-prices-dialog.component';
-import { DeleteSectionDialogComponent } from '../delete-section-dialog/delete-section-dialog.component';
+import { DeleteSectionDialogComponent } from '../../../shared/components/delete-section-dialog/delete-section-dialog.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DeleteProductDialogComponent } from '../delete-product-dialog/delete-product-dialog.component';

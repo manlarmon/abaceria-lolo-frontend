@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>{{ data.product ? 'Editar Producto' : 'Crear Producto' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="productForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre del Producto</mat-label>
+      <input matInput formControlName="productName" />
+      <mat-error *ngIf="productForm.get('productName')?.hasError('required')">
+        El nombre del producto es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Cantidad</mat-label>
+      <input matInput formControlName="quantity" type="number" />
+      <mat-error *ngIf="productForm.get('quantity')?.hasError('required')">
+        La cantidad es requerida
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()">Guardar</button>
+</mat-dialog-actions>

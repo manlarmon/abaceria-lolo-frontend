@@ -1,30 +1,47 @@
 @import '../../../styles/colors.scss';
 
 .container {
-    margin-top: 20px;
+    min-height: 100vh;
+    max-width: 100% !important;
+    margin: 0 !important;
     padding: 0;
-    border: 1px solid $dark;
-    border-radius: 5px;
+    margin-top: 80px !important;
+    background-color: $tertiary;
 
     .menu-header {
         padding: 0px;
+        background-color: $dark;
+        color: $gold;
+        border-radius: 5px 5px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 80px; // Aumenta la altura del menu-header
+        position: fixed;
+        top: 0; // Mantén el encabezado en la parte superior
+        width: 100%;
+        z-index: 1000; // Asegúrate de que esté por encima del contenido
+
+        .menu-logo {
+            height: 100%;
+            max-height: 60px; // Ajusta el tamaño según tus necesidades
+            width: auto;
+        }
 
         h3 {
             margin: 0;
             padding: 10px;
-            text-align: center;
+        }
+
+        button {
+            margin-right: 10px;
         }
     }
 }
 
-.menu-header {
-    background-color: $dark;
-    color: $gold;
-    border-radius: 5px 5px 0 0;
-}
-
 .menu-section {
     margin-bottom: 20px;
+    font-style: italic;
 
     h4 {
         background-color: $dark;
@@ -32,6 +49,7 @@
         margin-bottom: 5px;
         color: $gold;
         padding: 10px;
+        font-style: italic;
     }
 }
 
@@ -43,18 +61,28 @@
 .menu-product {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 
-    .menu-product-name {
+    .product-info {
         flex: 1;
-        font-weight: bold;
+        display: flex;
+        flex-direction: column;
+
+        .menu-product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .menu-product-allergens {
+            font-style: italic;
+            color: gray;
+        }
     }
 
     .menu-product-services {
         flex: 1;
-        font-style: italic;
-        color: gray;
-        text-align: center;
+        text-align: right;
+        margin-right: 5px;
 
         ul {
             padding: 0;
@@ -64,10 +92,5 @@
         li {
             margin-bottom: 5px;
         }
-    }
-
-    .menu-product-allergens {
-        flex: 1;
-        text-align: right;
     }
 }

@@ -45,7 +45,7 @@
                             TIPOS DE EMPLATADO
                         </span>
                     </mat-list-item>
-                    <mat-list-item class="customItem" routerLink="/menu-visualization">
+                    <mat-list-item class="customItem" (click)="openMenuVisualization()" >
                         <span class="material-symbols-outlined">
                             menu_book
                         </span>
@@ -54,7 +54,7 @@
                         </span>
                     </mat-list-item>
                     <hr class="divider">
-                    <mat-list-item class="customItem">
+                    <mat-list-item class="customItem" routerLink="/inventory">
                         <span class="material-symbols-outlined">
                             inventory_2
                         </span>
@@ -71,12 +71,12 @@
                             USUARIOS
                         </span>
                     </mat-list-item>
-                    <mat-list-item class="customItem">
+                    <mat-list-item class="customItem" routerLink="/user-guide">
                         <span class="material-symbols-outlined">
-                            monitoring
+                            developer_guide
                         </span>
                         <span class="nav-span">
-                            ESTADÍSTICAS
+                            GUIA DE USUARIO
                         </span>
                     </mat-list-item>
                 </mat-nav-list>

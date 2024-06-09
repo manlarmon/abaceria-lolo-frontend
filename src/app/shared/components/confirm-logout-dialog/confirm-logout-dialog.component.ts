@@ -12,13 +12,13 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule
   ],
   template: `
-  <h2 mat-dialog-title>Confirmar Eliminación</h2>
+  <h2 mat-dialog-title>Confirmar cerrar sesión</h2>
   <mat-dialog-content>
-    <p>¿Estás seguro de que deseas eliminar esta sección?</p>
+    <p>¿Estás seguro de que deseas cerrar esta sesión?</p>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button (click)="onCancel()">Cancelar</button>
-    <button mat-raised-button color="warn" (click)="onConfirm()">Eliminar</button>
+    <button mat-raised-button color="warn" (click)="onConfirm()">Cerrar sesión</button>
   </mat-dialog-actions>
 `,
 })
