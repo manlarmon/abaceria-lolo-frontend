@@ -11,7 +11,7 @@ import { SafeUrlPipe } from '../../core/pipes/safe-url.pipe';
   styleUrls: ['./user-guide.component.scss']
 })
 export class UserGuideComponent implements OnInit {
-  pdfSrc = 'assets/pdf/Inventory.pdf';
+  pdfSrc = 'assets/pdf/user-guide.pdf';
   isMobile = false;
 
   constructor() {
